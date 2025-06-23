@@ -22,6 +22,11 @@ const Navbar = () => {
           {isAuthenticated ? (
             <>
               <li className="nav-item">
+                <Link to="/all-posts" className="nav-link">
+                  All Posts
+                </Link>
+              </li>
+              <li className="nav-item">
                 <Link to="/dashboard" className="nav-link">
                   Dashboard
                 </Link>

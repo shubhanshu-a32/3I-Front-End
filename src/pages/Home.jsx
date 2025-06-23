@@ -1,31 +1,20 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import postService from '../api/postService';
-import PostItem from '../components/PostItem';
+import { useAuth } from '../context/AuthContext';
+import { Link, Navigate } from 'react-router-dom';
 
 const Home = () => {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { isAuthenticated, loading: authLoading } = useAuth();
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const data = await postService.getPosts();
-        setPosts(data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching posts:', error);
-        setLoading(false);
-      }
-    };
+  // If authenticated, redirect to dashboard
+  if (!authLoading && isAuthenticated) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
-    fetchPosts();
-  }, []);
-
-  if (loading) {
+  // Show loading spinner while auth is being checked
+  if (authLoading) {
     return <div className="loading">Loading...</div>;
   }
 
+  // Show public landing page for unauthenticated users
   return (
     <div className="home-page">
       <div className="hero">
@@ -34,19 +23,6 @@ const Home = () => {
         <Link to="/register" className="btn btn-primary">
           Get Started
         </Link>
-      </div>
-
-      <div className="posts-container">
-        <h2>Latest Ideas & Innovations</h2>
-        {posts.length === 0 ? (
-          <p>No posts yet. Be the first to share your idea!</p>
-        ) : (
-          <div className="posts-grid">
-            {posts.map((post) => (
-              <PostItem key={post._id} post={post} />
-            ))}
-          </div>
-        )}
       </div>
     </div>
   );

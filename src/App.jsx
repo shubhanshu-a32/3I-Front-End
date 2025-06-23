@@ -10,6 +10,7 @@ import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import CreatePost from './pages/CreatePost';
 import PostDetails from './pages/PostDetails';
+import AllPosts from './pages/AllPosts';
 
 // Components
 import Navbar from './components/Navbar';
@@ -28,6 +29,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/post/:id" element={<PostDetails />} />
+            <Route path="/all-posts" element={<AllPosts />} />
             
             {/* Protected Routes */}
             <Route element={<PrivateRoute />}>
