@@ -11,6 +11,7 @@ import Profile from './pages/Profile';
 import CreatePost from './pages/CreatePost';
 import PostDetails from './pages/PostDetails';
 import AllPosts from './pages/AllPosts';
+import EditPost from './pages/EditPost';
 
 // Components
 import Navbar from './components/Navbar';
@@ -30,6 +31,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/post/:id" element={<PostDetails />} />
             <Route path="/all-posts" element={<AllPosts />} />
+            <Route path="/edit-post/:id" element={<EditPost />} />
             
             {/* Protected Routes */}
             <Route element={<PrivateRoute />}>

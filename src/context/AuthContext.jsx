@@ -35,7 +35,9 @@ export const AuthProvider = ({ children }) => {
         }
 
         setAuthToken(token);
-        const response = await axios.get('/api/users/profile');
+        const response = await axios.get(
+          import.meta.env.VITE_API_URL + '/users/profile'
+        );
         setUser(response.data);
         setIsAuthenticated(true);
       } catch (error) {
@@ -52,7 +54,10 @@ export const AuthProvider = ({ children }) => {
   // Register user
   const register = async (userData) => {
     try {
-      const response = await axios.post('/api/users/register', userData);
+      const response = await axios.post(
+        import.meta.env.VITE_API_URL + '/users/register',
+        userData
+      );
       const { token } = response.data;
       
       // Set token in localStorage and axios headers
@@ -70,7 +75,10 @@ export const AuthProvider = ({ children }) => {
   // Login user
   const login = async (userData) => {
     try {
-      const response = await axios.post('/api/users/login', userData);
+      const response = await axios.post(
+        import.meta.env.VITE_API_URL + '/users/login',
+        userData
+      );
       const { token } = response.data;
       
       // Set token in localStorage and axios headers

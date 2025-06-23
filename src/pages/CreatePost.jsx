@@ -49,7 +49,11 @@ const CreatePost = () => {
         }
       };
       
-      await axios.post('/api/posts', formData, config);
+      await axios.post(
+        import.meta.env.VITE_API_URL + '/posts',
+        formData,
+        config
+      );
       navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to create post');

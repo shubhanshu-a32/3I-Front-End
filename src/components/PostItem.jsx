@@ -3,6 +3,8 @@ import { FaHeart, FaShareAlt, FaRegHeart, FaEdit, FaTrash } from 'react-icons/fa
 import { useAuth } from '../context/AuthContext';
 import postService from '../api/postService';
 import '../styles/PostItem.css';
+import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 const PostItem = ({ post, onDelete }) => {
   const { user, isAuthenticated } = useAuth();
@@ -37,11 +39,11 @@ const PostItem = ({ post, onDelete }) => {
 
     try {
       await postService.sharePost(post._id);
-      // You would typically update the post in state here
-      // This is simplified for the example
-      window.location.reload();
+      const shareUrl = `${window.location.origin}/post/${post._id}`;
+      await navigator.clipboard.writeText(shareUrl);
+      toast.success('Share link copied to clipboard!');
     } catch (error) {
-      console.error('Error sharing post:', error);
+      toast.error('Error sharing post');
     }
   };
 
@@ -75,7 +77,7 @@ const PostItem = ({ post, onDelete }) => {
           className="btn-share"
           disabled={!isAuthenticated}
         >
-          <FaShareAlt /> {post.shares || 0}
+          <FaShareAlt />
         </button>
         {user?._id === post.user?._id && (
           <div className="post-owner-actions">
@@ -94,6 +96,7 @@ const PostItem = ({ post, onDelete }) => {
           </div>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 };

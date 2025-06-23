@@ -3,6 +3,8 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { FaHeart, FaRegHeart, FaShareAlt, FaEdit, FaTrash } from 'react-icons/fa';
 import AuthContext from '../context/AuthContext';
 import postService from '../api/postService';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PostDetails = () => {
   const { id } = useParams();
@@ -54,8 +56,11 @@ const PostDetails = () => {
     try {
       const updatedPost = await postService.sharePost(post._id);
       setPost(updatedPost);
+      const shareUrl = `${window.location.origin}/post/${post._id}`;
+      await navigator.clipboard.writeText(shareUrl);
+      toast.success('Share link copied to clipboard!');
     } catch (error) {
-      console.error('Error sharing post:', error);
+      toast.error('Error sharing post');
     }
   };
   
@@ -117,7 +122,7 @@ const PostDetails = () => {
             className="btn-share"
             disabled={!isAuthenticated}
           >
-            <FaShareAlt /> {post.shares}
+            <FaShareAlt />
           </button>
           
           {isOwner && (
@@ -133,6 +138,7 @@ const PostDetails = () => {
           )}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

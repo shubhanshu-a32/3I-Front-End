@@ -16,7 +16,7 @@ const PostCard = ({ post }) => {
           </h2>
           <p className="text-gray-600 mb-4">{post.content.substring(0, 150)}...</p>
         </div>
-        {user && user._id === post.author._id && (
+        {user && user._id === post.user._id && (
           <div className="flex space-x-2">
             <Link
               to={`/edit-post/${post._id}`}
